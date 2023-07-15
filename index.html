@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Student</title>
+    <style>
+        body>div{
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            align-items: center;
+        }
+        body>div>div{
+            display: flex;
+            flex-direction: column;
+        }
+        body>div>div>input{
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div>
+        <input id="name" type="text" placeholder="Name">
+        <input id="city" type="text" placeholder="City">
+        <input id="email" type="text" placeholder="E-Mail">
+        <input id="level"type="text" placeholder="Level">
+        <button id="btn">SUBMIT</button>
+    </div>
+</div>
+<script src="lib/jquery-3.6.4.min.js"></script>
+<script>
+    $('#btn').click(function (){
+        let ob=JSON.stringify({name:$('#name').val(),city:$('#city').val(),email:$('#email').val(),level:$('#level').val()});
+        console.log(ob)
+        let setting ={
+            url:"http://localhost:8080/student",
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            data:ob
+        }
+
+        $.ajax(setting).done((a)=>{
+            console.log("ok")
+        }).fail((a,b,c)=>{
+            console.log(a,b,c)
+        })
+
+    })
+</script>
+</body>
+</html>
