@@ -27,7 +27,7 @@
         <input id="name" type="text" placeholder="Name">
         <input id="city" type="text" placeholder="City">
         <input id="email" type="text" placeholder="E-Mail">
-        <input id="level" type="text" placeholder="Level">
+        <input id="level" type="number" placeholder="Level">
         <button id="btn">SUBMIT</button>
     </div>
 </div>
@@ -35,8 +35,9 @@
 <script>
     function validate(){
         var name = new RegExp('^[a-zA-Z]+(([a-zA-Z ])?[a-zA-Z]*)*$');
-        var address = new RegExp('^[a-zA-Z]+(([a-zA-Z ])?[a-zA-Z]*)*$');
-        return name.test($('#name').val());
+        var address = new RegExp('^([a-zA-Z\u0080-\u024F]+(?:. |-| |\'))*[a-zA-Z\u0080-\u024F]*$');
+        var email = new RegExp('^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-]+)(\\.[a-zA-Z]{2,5}){1,2}$');
+        return !(name.test($('#name').val())) ? false : !address.test($('#city').val()) ? false : !email.test($('#email').val()) ? false : true;
     }
 
     function send(){
@@ -65,8 +66,12 @@
 
     $('#btn').click(
         function () {
-            console.log(validate())
-            //send();
+            if(validate()){
+                send();
+            }else {
+                alert('Check Fields')
+            }
+            //
         })
 </script>
 </body>
