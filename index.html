@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <title>Manage Student</title>
     <style>
-        body>div{
+        body > div {
             display: flex;
             justify-content: center;
             height: 100vh;
             align-items: center;
         }
-        body>div>div{
+
+        body > div > div {
             display: flex;
             flex-direction: column;
         }
-        body>div>div>input{
+
+        body > div > div > input {
             margin: 10px;
         }
     </style>
@@ -25,31 +27,47 @@
         <input id="name" type="text" placeholder="Name">
         <input id="city" type="text" placeholder="City">
         <input id="email" type="text" placeholder="E-Mail">
-        <input id="level"type="text" placeholder="Level">
+        <input id="level" type="text" placeholder="Level">
         <button id="btn">SUBMIT</button>
     </div>
 </div>
 <script src="lib/jquery-3.6.4.min.js"></script>
 <script>
-    $('#btn').click(function (){
-        let ob=JSON.stringify({name:$('#name').val(),city:$('#city').val(),email:$('#email').val(),level:$('#level').val()});
-        console.log(ob)
-        let setting ={
-            url:"http://localhost:8080/student",
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
+    function validate(){
+        var name = new RegExp('^[a-zA-Z]+(([a-zA-Z ])?[a-zA-Z]*)*$');
+        var address = new RegExp('^[a-zA-Z]+(([a-zA-Z ])?[a-zA-Z]*)*$');
+        return name.test($('#name').val());
+    }
+
+    function send(){
+        let ob = JSON.stringify({
+            name: $('#name').val(),
+            city: $('#city').val(),
+            email: $('#email').val(),
+            level: $('#level').val()
+        });
+        let setting = {
+            url: "http://localhost:8080/student",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
             },
-            data:ob
+            data: ob
         }
 
-        $.ajax(setting).done((a)=>{
+        $.ajax(setting).done((a) => {
             console.log("ok")
-        }).fail((a,b,c)=>{
-            console.log(a,b,c)
+        }).fail((a, b, c) => {
+            console.log(a, b, c)
         })
 
-    })
+    }
+
+    $('#btn').click(
+        function () {
+            console.log(validate())
+            //send();
+        })
 </script>
 </body>
 </html>
